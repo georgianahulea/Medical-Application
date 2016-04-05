@@ -1,0 +1,259 @@
+<div class="container" ng-hide = "vm.isMedic">
+    <div class="jumbotron">
+        <h3>Ne pare rau dar nu puteti accesa aceasta pagina</h3>
+    </div>
+</div>
+<div class="container content" ng-show="vm.isMedic">
+    <h3 class="test">Lista pacienti</h3>
+    <div class="col-md-8" style="padding-right: 50px;">
+    <div class="list-group">
+        <table class="table">
+            <thead>
+            <tr>
+                <th ng-click="vm.order('firstname')" style="cursor:pointer; width:22%">
+                    <span ng-show="vm.predicate === 'firstname' && !vm.reverse" class="fa fa-caret-down"></span>
+                    <span ng-show="vm.predicate === 'firstname' && vm.reverse" class="fa fa-caret-up"></span>
+                    Nume</th>
+                <th ng-click="vm.order('lastname')" style="cursor: pointer; width:22%">
+                    <span ng-show="vm.predicate === 'lastname' && !vm.reverse" class="fa fa-caret-down"></span>
+                    <span ng-show="vm.predicate === 'lastname' && vm.reverse" class="fa fa-caret-up"></span>
+                    Prenume</th>
+                <th ng-click="vm.order('gender')" style="cursor:pointer; width:14%">
+                    <span ng-show="vm.predicate === 'gender' && !vm.reverse" class="fa fa-caret-down"></span>
+                    <span ng-show="vm.predicate === 'gender' && vm.reverse" class="fa fa-caret-up"></span>
+                    Gen</th>
+                <th ng-click="vm.order('age')" style="cursor:pointer; width:10%">
+                    <span ng-show="vm.predicate === 'age' && !vm.reverse" class="fa fa-caret-down"></span>
+                    <span ng-show="vm.predicate === 'age' && vm.reverse" class="fa fa-caret-up"></span>
+                    Varsta</th>
+                <th ng-click="vm.order('ageCategory')" style="cursor:pointer">
+                    <span ng-show="vm.predicate === 'ageCategory' && !vm.reverse" class="fa fa-caret-down"></span>
+                    <span ng-show="vm.predicate === 'ageCategory' && vm.reverse" class="fa fa-caret-up"></span>
+                    Cat. de varsta</th>
+                <th>Sterge</th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" name="Cauta"  class="form-control"  ng-model="vm.search.firstname"/>
+                </th>
+                <th>
+                    <input type="text" name="Cauta"  class="form-control"  ng-model="vm.search.lastname"/>
+                </th>
+                <th>
+                    <select class="form-control" ng-model="vm.search.gender">
+                        <option value="" >All</option>
+                        <option value="feminin">F</option>
+                        <option value="masculin">M</option>
+                    </select>
+                </th>
+                <th>
+                    <input type="text" name="Cauta"  class="form-control" min="0" ng-model="vm.search.age" numbers-only="numbers-only"/>
+                </th>
+                <th>
+                    <select class="form-control" ng-model="vm.search.ageCategory">
+                        <option value="" >All</option>
+                        <option value="child">Child</option>
+                        <option value="adult">Adult</option>
+                        <option value="senior">Senior</option>
+                    </select>
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="pacient in vm.pacients  | filter: vm.search | filter: vm.filterByType() | filter: vm.filterByGender() | orderBy: vm.predicate: vm.reverse">
+                <td ><a ui-sref="fisa-pacient({id : pacient.id})" >{{pacient.firstname}}</a></td>
+                <td ><a ui-sref="fisa-pacient({id : pacient.id})"  >{{pacient.lastname}}</a></td>
+                <td ><a ui-sref="fisa-pacient({id : pacient.id})"  >{{pacient.gender}}</a></td>
+                <td ><a ui-sref="fisa-pacient({id : pacient.id})"  align = "center">{{pacient.age}}</a></td>
+                <td ><a ui-sref="fisa-pacient({id : pacient.id})" align = "center">{{pacient.ageCategory}}</a></td>
+                <td><button type="button " class="btn btn-primary"  ng-click="vm.deletePacient(pacient.id)" data="'{{pacient.id}}'">Sterge</button></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="button" ng-click="vm.showForm = true" class="btn btn-primary" ng-hide="vm.showForm">Adauga pacient</button>
+    </div>
+</div>
+    <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-addon">Cauta</span>
+            <input type="text" name="Cauta" class="form-control" placeholder="Search all" ng-model="vm.search.$" >
+        </div>
+
+        <h3>Filter By:</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th >Age categ:</th>
+                <th >Gender</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr >
+                <td>
+                    <label><input type="checkbox" ng-model="vm.filterAgeCat.child">Copil</label><br>
+                    <label><input type="checkbox" ng-model="vm.filterAgeCat.adult">Adult</label><br>
+                    <label><input type="checkbox" ng-model="vm.filterAgeCat.senior">Pensionar</label><br>
+                </td>
+                <td >
+                    <label><input type="checkbox" ng-model="vm.gender.feminin">Feminin</label><br>
+                    <label><input type="checkbox"ng-model="vm.gender.masculin">Masculin</label><br>
+                </td>
+            </tr>
+            <tr>
+            </tbody>
+        </table>
+
+        <div class="panel panel-default appointments" style = "margin-top: 15px; min-height:310px ">
+        <div class="panel-heading">Programari</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th >Data</th>
+                <th >Ora</th>
+                <th >Nume</th>
+                <th>done</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  ng-repeat="app in vm.filteredAppointments | orderBy: 'date' " ng-init ="vm.passedAppointments(app.date)">
+                <td ng-style = "{{vm.style}}">{{app.date | date: 'dd-MM-yyyy'}}</td>
+                <td ng-style = "{{vm.style}}">{{app.date | date:'H:mm'}}</td>
+                <td ng-style = "{{vm.style}}">{{app.firstname}} {{app.lastname}}</td>
+                <td><button type="button" class="btn btn-default btn-sm " ng-click = "vm.deleteAppointment(app.appID); " data = "'{{app.appID}}'" ><i class="fa fa-trash-o"></i></button></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <uib-pagination total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.currentPage" max-size="vm.maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" style = "margin-top:0px;"></uib-pagination>
+
+
+    </div>
+    <div class="col-md-12">
+    <div ng-show ="vm.showForm;">
+        <h3 class="test">Pacient nou</h3>
+        <form name="form" class="css-form" novalidate>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Nume</span>
+                    <input type="text" name="firstname" class="form-control" placeholder="Nume" ng-minlength="3" ng-model="vm.input.firstname" value="vm.input.firstname" ng-pattern="/^[a-zA-Z]*$/" ng-blur="vm.showRequiredError('firstname'); vm.capitalize('firstname')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Prenume</span>
+                    <input type="text" name="lastname" class="form-control" placeholder="Prenume" ng-minlength="3" ng-model="vm.input.lastname" value="vm.input.lastname" ng-pattern="/^[a-zA-Z]*$/" ng-blur="vm.showRequiredError('lastname'); vm.capitalize('lastname')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Gen</span>
+                    <select class="form-control" name="gender" ng-model = "vm.input.gender" ng-blur="vm.showRequiredError('gender')" required="">
+                        <option value="" disabled>- Please Choose -</option>
+                        <option  value="feminin"> Feminin</option>
+                        <option  value="masculin">Masculin</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">CNP</span>
+                    <input type="text" name="cnp" class="form-control" placeholder="CNP"  pattern=" ^(0|[1-9][0-9]*)$" numbers-only="numbers-only" maxlength ="13" minlength="13" min = "0" ng-model="vm.input.cnp" value="vm.input.cnp" ng-blur="vm.showRequiredError('cnp');" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Varsta</span>
+                    <input type="text" name="age" class="form-control" placeholder="Varsta" pattern="^(0|[1-9][0-9]*)$" numbers-only="numbers-only" maxlength ="2" min = "0" ng-model="vm.input.age" value="vm.input.age" ng-blur="vm.showRequiredError('age');" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Categorie de varsta</span>
+                    <select class="form-control" name="ageCategory" ng-model = "vm.input.ageCategory" ng-blur="vm.showRequiredError('ageCategory')" required="">
+                        <option value="" disabled>- --Choose your destiny -- -</option>
+                        <option  value="child">Copil</option>
+                        <option  value="adult">Adult</option>
+                        <option  value="senior">Pensionar</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Username</span>
+                    <input type="text" name="username" class="form-control name" placeholder="Username" ng-minlength="5" ng-model="vm.input.username" ng-blur="vm.showRequiredError('username')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Parola</span>
+                    <input type="password" name="password" class="form-control" placeholder="Parola" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[><.,\/#!$%\^&\*;:{}=\-_`~()])(?=.{8,})/" ng-model="vm.input.password" ng-blur="vm.showRequiredError('password')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+        </div>
+            <div class="row detalii">
+                <h4>Date consultatie</h4>
+                <div class="input-group">
+                    <span class="input-group-addon">Data</span>
+                    <input type="date" name="data" class="form-control" autocomplete="on" ng-model="vm.input.data" ng-blur="vm.showRequiredError('data')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Boala</span>
+                    <input type="text" name="disease" class="form-control" placeholder="Introduceti boala" ng-model="vm.input.disease" ng-blur="vm.showRequiredError('disease');  vm.capitalize('disease')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Detalii</span>
+                    <textarea type="text" name="detalii" class="form-control" maxlength="200" minlength="20" placeholder="Introduceti detalii despre analize"  ng-model="vm.input.detalii" value="vm.input.detalii" ng-blur="vm.showRequiredError('detalii'); vm.capitalize('detalii')" ng-change="vm.hideRequiredError()" required=""></textarea>
+                </div>
+                <p class="remaining-text">{{200 - form.detalii.$viewValue.length}} caractere ramase</p>
+
+            </div>
+                <div class="bg-danger" ng-show="vm.showError" ng-hide="!vm.showError">Toate campurile sunt obligatorii </div>
+                <div class="bg-danger help-inline" ng-show="form.firstname.$error.minlength">Numele trebuie sa contina minim 3 caractere.</div>
+                <div class="bg-danger help-inline" ng-show="form.age.$error.pattern">Varsta trebuie sa contina doar cifre.</div>
+                <div class="bg-danger help-inline" ng-show="form.cnp.$error.pattern">CNPp-ul trebuie sa contina doar cifre.</div>
+                <div class="bg-danger help-inline" ng-show="form.cnp.$error.minlength">CNPp-ul trebuie sa contina 13 cifre.</div>
+                <div class="bg-danger help-inline" ng-show="form.lastname.$error.minlength">Prenumele trebuie sa contina minim 3 caractere.</div>
+                <div class="bg-danger help-inline" ng-show="form.username.$error.minlength">Username-ul trebuie sa contina minim 5 caractere.</div>
+                <div class="bg-danger help-inline" ng-show="form.detalii.$error.minlength" >Textul trenuie sa contina minim 20 de caractere maxim 200</div>
+                <div class="bg-danger help-inline" ng-show="form.firstname.$error.pattern">Numele trebuie sa contina doar litere</div>
+                <div class="bg-danger help-inline" ng-show="form.lastname.$error.pattern">Numele trebuie sa contina doar litere</div>
+                <div class="bg-danger help-inline" ng-show="form.password.$error.pattern">Parola trebuie sa contina : minim 8 caractere, o litera mare, o litera mica, o cifra si un semn de punctuatie.</div>
+
+        <button type="button" style="margin-bottom: 70px" class="btn btn-primary" ng-click="vm.addPacient()" ng-disabled="vm.isDisabled()">Adauga pacient</button>
+
+        </form>
+
+        <div class="row">
+            <div class="col-md-6">
+                <select class="form-control">
+                    <option value="" disabled>- --Choose your destiny -- -</option>
+                    <option  value="child">Copil</option>
+                    <option  value="adult">Adult</option>
+                    <option  value="senior">Pensionar</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option value="" disabled>-- buc ---</option>
+                    <option  value="child">Copil</option>
+                    <option  value="adult">Adult</option>
+                    </select>
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-6">
+                    <input type="number">
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</div>
+
+

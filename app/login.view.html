@@ -1,0 +1,24 @@
+<div class="container content">
+
+    <div >
+        <div class="col-sm-4">
+            <h3>Log in</h3>
+            <form name="loginForm" >
+                <div class="input-group">
+                    <span class="input-group-addon">Username</span>
+                    <input type="text" class="form-control" placeholder ="Username" ng-model="vm.username" required="">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">Password</span>
+                    <input type="password" class="form-control" placeholder="Type your password" ng-model="vm.parola" required="">
+                </div>
+                <br>
+
+                <br>
+                <button style="margin-bottom: 70px" class="btn btn-primary" ng-click="vm.submit()" >Log in</button>
+            </form>
+        </div>
+
+    </div>
+</div>

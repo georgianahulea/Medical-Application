@@ -1,0 +1,80 @@
+/* <---------------- header ------------->*/
+/*
+.container{
+    background-color: #4d4d4d;
+}
+.header{
+    height: 230px;
+    background-color: #2a2;
+}
+*/
+.glyphicon{
+margin-right: 5px;
+}
+/* <---------------- /header ------------->*/
+.header-title{
+    text-align: center;
+    margin-top:70px;
+    margin-bottom: 40px;
+    font-size: 60px;
+}
+.container.header{
+    min-height: 250px;
+}
+
+.navbar-inverse {
+    background-color: #929292!important;
+    border-color: #929292!important;
+}
+.navbar-inverse .navbar-nav>.active>a{
+    color: #fff;
+    background-color: #313131!important;
+}
+
+.navbar-inverse .navbar-nav>li>a{
+    line-height: 25px;
+    font-size: 18px;
+    min-width:70px ;
+    color: #fff!important;
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+    background-color: #313131!important;
+}
+
+/* <---------------- medic view ------------->*/
+.input-group{
+    padding-bottom: 20px;
+}
+.detalii{
+    padding: 0 15px;
+}
+
+.bg-success{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0 10px 15px;
+    margin-bottom: 15px;
+}
+
+.bg-danger{
+    font-size: 16px;
+    font-weight: bold;
+    color: #B96060;
+    padding: 10px 0 10px 15px;
+    margin-bottom: 15px;
+}
+/* <---------------- / medic view ------------->*/
+.remaining-text{
+    text-align: right;
+    margin-top: -18px;
+    font-size: 12px;
+    color: #656565;
+}
+
+.delete-button{
+    display: inline-block !important;
+    width: 80%;
+}
+.pacient-row{
+    margin: 15px;
+}

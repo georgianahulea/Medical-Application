@@ -1,0 +1,99 @@
+<div class="container" ng-hide = "vm.isMedic">
+    <div class="jumbotron">
+        <h3>Ne pare rau dar nu puteti accesa aceasta pagina</h3>
+    </div>
+</div>
+<div class="container content"  ng-show="vm.isMedic">
+    <h3>Fisa Pacient</h3>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Nume Prenume</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.firstname}} {{vm.localPacients.lastname}}</div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Username</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.username}}</div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Varsta</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.age}} ani</div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Type</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.type}}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Gen</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.gender}}</div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Categorie de varsta</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.ageCategory}}</div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Consultatie</h5>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="col-md-3">Data</th>
+                    <th class="col-md-3">Boala</th>
+                    <th class="col-md-6">Detalii</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="entry in vm.localPacientTests">
+                    <td class="col-md-3">{{entry.data | date: 'dd-MM-yyyy'}}</td>
+                    <td class="col-md-3">{{entry.disease}}</td>
+                    <td class="col-md-6">{{entry.detalii}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <form name="form" novalidate>
+            <div class="input-group">
+                <span class="input-group-addon">Data</span>
+                <input type="date" name="data" class="form-control" autocomplete="on" ng-model="vm.consultatie.data" ng-blur="vm.showRequiredError('data')" ng-change="vm.hideRequiredError()" required="">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">Boala</span>
+                <input type="text" name="disease" class="form-control" placeholder="Introduceti boala"   ng-model="vm.consultatie.disease" ng-blur="vm.showRequiredError('disease')" ng-change="vm.hideRequiredError()" required="">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">Detalii</span>
+                <textarea type="text" class="form-control" name="detalii" placeholder="Introduceti detalii despre analize" ng-model="vm.consultatie.detalii" ng-blur="vm.showRequiredError('detalii')" ng-change="vm.hideRequiredError()" required="">
+                </textarea>
+            </div>
+            <br>
+
+            <div class="bg-danger" ng-show="vm.showError" ng-hide="!vm.showError">Toate campurile sunt obligatorii</div>
+
+            <button type="button" class="btn btn-primary" ng-click="vm.add()" ng-disabled="vm.isDisabled()">Adauga</button>
+        </form>
+
+    </div>
+
+</div>
+

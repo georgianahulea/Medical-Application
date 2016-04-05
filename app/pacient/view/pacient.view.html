@@ -1,0 +1,122 @@
+<div class="container" ng-hide = "vm.isPacient">
+    <div class="jumbotron">
+        <h3>Ne pare rau dar nu puteti accesa aceasta pagina</h3>
+    </div>
+</div>
+<div class="container content" ng-show = "vm.isPacient">
+    <h3>Fisa {{vm.localPacients.firstname}} {{vm.localPacients.lastname}}</h3>
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Nume</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.firstname}} </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Username</h5>
+            </div>
+            <div class="panel-body" ng-show="!vm.newCurrentPacient">{{vm.localPacients.username}}</div>
+        </div>
+
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Prenume</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.lastname}} </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Parola</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.password}}</div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Varsta</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.age}} ani</div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Categorie de varsta</h5>
+            </div>
+            <div class="panel-body">{{vm.localPacients.ageCategory}}</div>
+        </div>
+
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Consultatie</h5>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                <th class="col-md-3">Data</th>
+                    <th class="col-md-3">Boala</th>
+                    <th class="col-md-8">Detalii</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="entry in vm.localPacientTests">
+                    <td class="col-md-3">{{entry.data | date: 'dd-MM-yyyy'}}</td>
+                    <td class="col-md-3">{{entry.disease}}</td>
+                    <td class="col-md-6">{{entry.detalii}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <form name="form" novalidate>
+               <h4>Data selectata pentru programare este: </h4>
+
+            <div class="col-md-3" style="margin-top: 35px;">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.appDate" is-open="vm.popup.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats"  />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+
+            </div>
+                <div class="col-md-3">
+                <uib-timepicker ng-model="vm.appDate"  hour-step="1" minute-step="30" show-meridian="ismeridian" required = ""></uib-timepicker>
+                </div>
+            <button type="button" class="btn btn-primary" ng-click="vm.setAppointment(); vm.load()" ng-disabled="vm.isDisabled()" style="display: inline; margin-top: 35px;" >Confirma</button>
+
+        </form>
+
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default appointments" style = "margin-top: 15px;">
+            <div class="panel-heading">Programarile dumneavoastra</div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th >Data</th>
+                    <th >Ora</th>
+                    <th>Anulare</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="app in vm.appointments | orderBy: 'date'">
+                   <td> {{app.id}} </td>
+                    <td >{{app.date | date: 'dd-MM-yyyy'}}</td>
+                    <td >{{app.date | date:'H:mm'}}</td>
+                    <td><button type="button" class="btn btn-default btn-sm " ng-click = "vm.deleteAppointment(app.appID); " data = "'{{app.appID}}'" ><i class="fa fa-trash-o"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+</div>

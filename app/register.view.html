@@ -1,0 +1,76 @@
+<div class="container">
+    <h3 class="test">Register now</h3>
+    <form name="form" class="css-form" novalidate>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Nume</span>
+                    <input type="text" name="firstname" class="form-control" placeholder="Nume" ng-minlength="3" ng-model="vm.input.firstname" value="vm.input.firstname" ng-pattern="/^[a-zA-Z]*$/" ng-blur="vm.showRequiredError('firstname'); vm.capitalize('firstname')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Prenume</span>
+                    <input type="text" name="lastname" class="form-control" placeholder="Prenume" ng-minlength="3" ng-model="vm.input.lastname" value="vm.input.lastname" ng-pattern="/^[a-zA-Z]*$/" ng-blur="vm.showRequiredError('lastname'); vm.capitalize('lastname')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Gen</span>
+                    <select class="form-control" name="gender" ng-model = "vm.input.gender" ng-blur="vm.showRequiredError('gender')" required="">
+                        <option value="" disabled>- Please Choose -</option>
+                        <option  value="feminin"> Feminin</option>
+                        <option  value="masculin">Masculin</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">CNP</span>
+                    <input type="text" name="cnp" class="form-control" placeholder="CNP"  pattern=" ^(0|[1-9][0-9]*)$" numbers-only="numbers-only" maxlength ="13" minlength="13" min = "0" ng-model="vm.input.cnp" value="vm.input.cnp" ng-blur="vm.showRequiredError('cnp');" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Varsta</span>
+                    <input type="text" name="age" class="form-control" placeholder="Varsta" pattern="^(0|[1-9][0-9]*)$" numbers-only="numbers-only" maxlength ="2" min = "0" ng-model="vm.input.age" value="vm.input.age" ng-blur="vm.showRequiredError('age');" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Specialitate</span>
+                    <input type="text" name="specialties" class="form-control" placeholder="Specialitatea" ng-minlength="3" ng-model="vm.input.specialties" value="vm.input.specialties" ng-blur="vm.showRequiredError('specialties'); vm.capitalize('lastname')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Username</span>
+                    <input type="text" name="username" class="form-control" placeholder="Username" ng-minlength="5" ng-model="vm.input.username" ng-blur="vm.showRequiredError('username')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Parola</span>
+                    <input type="password" name="password" class="form-control" placeholder="Parola" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[><.,\/#!$%\^&\*;:{}=\-_`~()])(?=.{8,})/" ng-model="vm.input.password" ng-blur="vm.showRequiredError('password')" ng-change="vm.hideRequiredError()" required="">
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-success help-inline" ng-show = "vm.success"> Inregistrarea a fost efectuata cu succes.  </div>
+
+        <div class="bg-danger" ng-show="vm.showError" ng-hide="!vm.showError">Toate campurile sunt obligatorii </div>
+        <div class="bg-danger help-inline" ng-show="form.firstname.$error.minlength">Numele trebuie sa contina minim 3 caractere.</div>
+        <div class="bg-danger help-inline" ng-show="form.age.$error.pattern">Varsta trebuie sa contina doar cifre.</div>
+        <div class="bg-danger help-inline" ng-show="form.cnp.$error.pattern">CNPp-ul trebuie sa contina doar cifre.</div>
+        <div class="bg-danger help-inline" ng-show="form.cnp.$error.minlength">CNPp-ul trebuie sa contina 13 cifre.</div>
+        <div class="bg-danger help-inline" ng-show="form.lastname.$error.minlength">Prenumele trebuie sa contina minim 3 caractere.</div>
+        <div class="bg-danger help-inline" ng-show="form.username.$error.minlength">Username-ul trebuie sa contina minim 5 caractere.</div>
+        <div class="bg-danger help-inline" ng-show="form.firstname.$error.pattern">Numele trebuie sa contina doar litere</div>
+        <div class="bg-danger help-inline" ng-show="form.lastname.$error.pattern">Numele trebuie sa contina doar litere</div>
+        <div class="bg-danger help-inline" ng-show="form.password.$error.pattern">Parola trebuie sa contina : minim 8 caractere, o litera mare, o litera mica, o cifra si un semn de punctuatie.</div>
+
+        <button type="button" style="margin-bottom: 70px" class="btn btn-primary" ng-click="vm.addMedic()" ng-disabled="vm.isDisabled()">Register</button>
+
+    </form>
+</div>
